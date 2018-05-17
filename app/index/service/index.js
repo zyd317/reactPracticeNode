@@ -38,7 +38,7 @@ class Service extends Abstract{
                 let end = {
                     module: "home",
                     config: {
-                        loaded: true,
+                        loading: false,
                         error: false,
                         errorInfo:''
                     }
@@ -49,12 +49,15 @@ class Service extends Abstract{
             let data = {
                 module: "home",
                 config: {
-                    loaded: true,
+                    loading: false,
                     error: true,
                     errorInfo: error
                 }
             };
-            self.emit("error", data);
+            // 错误等待一秒钟
+            setTimeout(()=>{
+                self.emit("error", data);
+            }, 1000)
         });
     }
 }
