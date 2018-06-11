@@ -53,7 +53,7 @@ module.exports = function (req, res, next) {
         }
     }
 
-    // 纠正content-length,如果是 **gzip** 之后的，直接postData.length结果不正确
+    // 纠正content-length,如果是 **body带有汉字的** ，取length不是取的字节，导致传给服务器的body解析出错
     if (postData && 'content-length' in urlObj.headers) {
         urlObj.headers['content-length'] = Buffer.byteLength(postData);
     }
