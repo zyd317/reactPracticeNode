@@ -10,18 +10,27 @@ let https = require('https');
 let http = require('http');
 let querystring = require('querystring');
 let zlib = require('zlib');
+let API_PROXY = require('../config/apiProxy');
 
 /**
  * 接口请求代理，代理接口的地址为: `/api/:key`
  * 给`/api/:key`请求的参数、body以及header信息，会转发给被代理的最终的接口。
  */
 module.exports = function (req, res, next) {
-    let urlObj = req.url;
+    let key = req.params.key;
+    let urlObj = url.parse(API_PROXY[key] || '');
+    let origin = url.parse(req.url);
+    let originQuery = origin.query;
+    let body = req.body;
     let postData = '';
-    let origin = url.parse(req.url); // 解析url
-    let originQuery = origin.query; // get查询参数
-    let body = req.body; // post查询参数
-    let hasQuery = !!urlObj.query; // 有查询参数
+    let hasQuery = !!urlObj.query;
+
+    if (!(key in API_PROXY)) {
+        return res.json({
+            status: 1000,
+            message: '请求的接口不存在'
+        });
+    }
 
     // 处理query参数，将请求的参数追加到最终代理接口上
     if (originQuery) {
@@ -34,6 +43,7 @@ module.exports = function (req, res, next) {
     urlObj.method = req.method;
 
     urlObj.headers.host = urlObj.host;
+
     // 处理POST数据的body
     if (req.method === 'POST') {
         if (req.headers['content-type'] === 'application/json') {
@@ -42,15 +52,17 @@ module.exports = function (req, res, next) {
             postData = querystring.stringify(body);
         }
     }
-    urlObj.headers['content-length'] = postData.length; // 纠正content-length
 
-    let client = urlObj.protocol === 'https:' ? https : http; // 获取请求协议
-
+    // 纠正content-length,如果是 **gzip** 之后的，直接postData.length结果不正确
+    if (postData && 'content-length' in urlObj.headers) {
+        urlObj.headers['content-length'] = Buffer.byteLength(postData);
+    }
     /**
      * 创建urlObj的请求。
      * 请求到数据之后，保存在日志中，gzip压缩的需要解压，输出正常日志
      * 将response.pipe(res)
      */
+    let client = urlObj.protocol === 'https:' ? https : http; // 获取请求协议
     let proxy = client.request(urlObj, function (response) {
         res.status(response.statusCode);
         res.set(response.headers);

@@ -19,9 +19,14 @@ router.get("/index", function(req, res, next){
     new Action(attr, service).execute(req, res, next);
 });
 
+router.get("/list", function(req, res, next){
+    res.render('pages/flightList');
+});
+
 /**
  * 接口代理，处理跨域请求
  */
 router.get("/interface/api/:key", proxy);
+router.post("/interface/api/:key", proxy);
 
 module.exports = router;
