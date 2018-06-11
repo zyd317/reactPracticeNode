@@ -43,4 +43,6 @@
 - [x] 增加统一的请求 - ZRequest.js
 - [X] layout
 - [X] 增加数据清洗模块
+- [X] bigpipe输出页面数据
+- [X] 请求代理，middleware
 - [ ] 增加日志收集,引入log4j模块 - ZLogger.js

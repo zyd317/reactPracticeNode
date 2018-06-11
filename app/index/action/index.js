@@ -1,5 +1,7 @@
 /**
  * Created by yidi.zhao on 2018/5/11.
+ *
+ * bigpipe，监听service事件，渲染页面模版
  */
 "use strict";
 let Abstract = require('./../../Abstract');
@@ -16,6 +18,12 @@ class Action extends Abstract {
         return '<script type="text/javascript">window.receive('+ JSON.stringify(data) +')</script>';
     }
 
+    /**
+     * 入口，监听service触发的on("data")，on("end")，on("error")，将页面write到html中
+     * 并且渲染页面模版
+     * @param req
+     * @param res
+     */
     execute(req, res){
         let self = this;
         this.service.on("data", function(data){
@@ -42,7 +50,7 @@ class Action extends Abstract {
         });
 
         /**
-         * 渲染flightDetail模版
+         * 渲染index模版
          */
         co(function *(){
             //渲染模版-ota页-先获取模版渲染信息，模版渲染-
