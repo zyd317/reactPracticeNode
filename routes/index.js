@@ -10,7 +10,7 @@ let proxy = require('../middleware/proxy');
 /**
  * 首页
  */
-router.get("/index", function(req, res, next){
+router.get("/flightList", function(req, res, next){
     let attr = {
         test: false,
         pageId: "index_page"
@@ -18,12 +18,6 @@ router.get("/index", function(req, res, next){
     let service = new Service(attr);
     new Action(attr, service).execute(req, res, next);
 });
-
-// 列表页，不使用bigpipe。因为node没办法获取设备信息
-router.get("/list", function(req, res, next){
-    res.render('pages/flightList');
-});
-
 /**
  * 接口代理，处理跨域请求
  */

@@ -54,7 +54,7 @@ class Action extends Abstract {
          */
         co(function *(){
             //渲染模版-ota页-先获取模版渲染信息，模版渲染-
-            let layout = yield zTemplate.render('pages/index', {
+            let layout = yield zTemplate.render('pages/flightList', {
                 serverTime: new Date().getTime(),
                 pageId: self.attr.pageId,
                 title: 'index'

@@ -5,7 +5,7 @@
 
 ### 使用
     npm i
-    node start (node ./bin/start node)作为服务器
+    npm start (node ./bin/start node)作为服务器
     访问demo页：http://m.flight.qunar.com/demoName
 
 ### 目录搭建
