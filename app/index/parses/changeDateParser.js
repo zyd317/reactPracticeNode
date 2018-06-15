@@ -5,5 +5,5 @@
  */
 "use strict";
 exports.parse = function(data) {
-    return data;
+    return data.goDate;
 };

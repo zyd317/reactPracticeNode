@@ -6,11 +6,15 @@
  */
 let Abstract = require('../../Abstract');
 let FetchIndexData = require('./fetchIndexData');
-let IndexDataParser = require('../parses/IndexDataParser');
+let changeDateParser = require('../parses/changeDateParser');
+let flightListParser = require('../parses/flightListParser.js');
+let filterParser = require('../parses/filterParser.js');
 let co = require('co');
 
 let moduleMap = {
-    index: IndexDataParser
+    changeDate: changeDateParser,
+    flightList: flightListParser,
+    filter: filterParser
 };
 
 class Service extends Abstract{
@@ -43,7 +47,7 @@ class Service extends Abstract{
             for(let module in moduleMap){
                 dataObj[module] = {
                     module: module,
-                    config: moduleMap[module].parse.call(self, indexData)
+                    config: moduleMap[module].parse.call(self, indexData[0])
                 };
                 self.emit("data", dataObj[module]);
             }

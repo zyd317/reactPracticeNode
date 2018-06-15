@@ -25,7 +25,11 @@ class FetchData extends Abstract{
                 },
                 "body": param
             }).then(function(data){
-                resolve(data);
+                if(data && data.bstatus && data.bstatus.code === 0 && data.data){
+                    resolve(data.data);
+                } else {
+                    reject("error");
+                }
             }).catch(err => {
                 reject(err);
             })
