@@ -26,7 +26,7 @@ class Service extends Abstract{
     /**
      * 请求这个页面需要的所有接口,同步进行
      * @param req
-     * @return {Promise.<T>}
+     * @return {Promise.<Promise>}
      */
     requestAll(req) {
         let self = this;

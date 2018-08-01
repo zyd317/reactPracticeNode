@@ -5,8 +5,8 @@
 
 ### 使用
     npm i
-    npm start (node ./bin/start node)作为服务器
-    访问demo页：http://m.flight.qunar.com/demoName
+    npm start (node ./bin/start)作为服务器（也可以安装forever来作为守护进行 forever start ./bin/start）
+    访问demo页：http://zyd.test.com/flightList?goDate=2018-06-13&depCity=%E5%8C%97%E4%BA%AC&arrCity=%E4%B8%8A%E6%B5%B7&searchKey=flightCity&activeIndex=0&from=undefined
 
 ### 目录搭建
 ```bash
@@ -45,5 +45,5 @@
 - [X] 增加数据清洗模块
 - [X] bigpipe输出页面数据
 - [X] 请求代理，middleware
+- [X] 数据清洗，分模块传送-redux
 - [ ] 增加日志收集,引入log4j模块 - ZLogger.js
-- [ ] 数据清洗，分模块传送-redux
