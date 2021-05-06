@@ -33,6 +33,6 @@
     "qs": "^6.5.1",
     "request": "^2.60.0",
     "serve-favicon": "~2.3.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.12.1"
   }
 }
